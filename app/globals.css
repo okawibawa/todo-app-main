@@ -1,3 +1,25 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+  .grid-container {
+    --content-max-width: 600px;
+
+    display: grid;
+    grid-template-columns:
+      [full-width-start] minmax(1rem, 1fr) [content-start] min(100% - (1rem * 2), var(--content-max-width)) [content-end] minmax(
+        1rem,
+        1fr
+      )
+      [full-width-end];
+  }
+
+  .grid-container > :not(.full-width) {
+    grid-column: content;
+  }
+
+  .grid-container > .full-width {
+    grid-column: full-width;
+  }
+}

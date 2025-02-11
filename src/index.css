@@ -1,0 +1,48 @@
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@700&display=swap");
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  /* Breakpoints */
+  --breakpoint-sm: 600px;
+  --breakpoint-md: 900px;
+
+  /* Primary Colors */
+  --color-primary-bright-blue: hsl(220, 98%, 61%);
+
+  /* Gradient Colors */
+  --color-gradient-start: hsl(192, 100%, 67%);
+  --color-gradient-end: hsl(280, 87%, 65%);
+
+  /* Light Theme Colors */
+  --color-neutral-light-very-light-gray: hsl(0, 0%, 98%);
+  --color-neutral-light-very-light-grayish-blue: hsl(236, 33%, 92%);
+  --color-neutral-light-light-grayish-blue: hsl(233, 11%, 84%);
+  --color-neutral-light-dark-grayish-blue: hsl(236, 9%, 61%);
+  --color-neutral-light-very-dark-grayish-blue: hsl(235, 19%, 35%);
+
+  /* Dark Theme Colors */
+  --color-neutral-dark-very-dark-blue: hsl(235, 21%, 11%);
+  --color-neutral-dark-very-dark-desaturated-blue: hsl(235, 24%, 19%);
+  --color-neutral-dark-light-grayish-blue: hsl(234, 39%, 85%);
+  --color-neutral-dark-light-grayish-blue-hover: hsl(236, 33%, 92%);
+  --color-neutral-dark-dark-grayish-blue: hsl(234, 11%, 52%);
+  --color-neutral-dark-very-dark-grayish-blue: hsl(233, 14%, 35%);
+  --color-neutral-dark-darker-grayish-blue: hsl(237, 14%, 26%);
+
+  /* Gradient Background */
+  --gradient-check-background: linear-gradient(
+    to bottom right,
+    var(--color-gradient-start),
+    var(--color-gradient-end)
+  );
+}
+
+@layer base {
+  html {
+    font-size: 18px;
+    font-family: "Josefin Sans", sans-serif;
+  }
+}

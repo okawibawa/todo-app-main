@@ -2,7 +2,7 @@ import axios from "axios";
 import { Todo, CreateTodoInput, UpdateTodoInput } from "../types/todo";
 
 const api = axios.create({
-  baseURL: process.env.REACT_APP_API_URL || "http://localhost:3001",
+  baseURL: import.meta.env.REACT_APP_API_URL || "http://localhost:3001",
 });
 
 export const todosApi = {

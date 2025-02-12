@@ -12,6 +12,6 @@ export interface CreateTodoInput {
 }
 
 export interface UpdateTodoInput {
-  title: string;
-  completed: boolean;
+  title?: string;
+  completed?: boolean;
 }

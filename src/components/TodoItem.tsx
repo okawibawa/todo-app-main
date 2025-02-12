@@ -3,18 +3,17 @@ import { useTodosQuery } from "../hooks/useTodosQuery";
 
 interface TodoItem {
   todo: Todo;
-  onDragStart: (event: React.DragEvent<HTMLDivElement>, todo: Todo) => void;
-  onDragEnd: () => void;
-  onDragOver: (event: React.DragEvent<HTMLDivElement>) => void;
-  onDrop: (event: React.DragEvent<HTMLDivElement>, todo: Todo) => void;
+  // onDragStart: (event: React.DragEvent<HTMLDivElement>, todo: Todo) => void; onDragEnd: () => void;
+  // onDragOver: (event: React.DragEvent<HTMLDivElement>) => void;
+  // onDrop: (event: React.DragEvent<HTMLDivElement>, todo: Todo) => void;
 }
 
 export const TodoItem = ({
   todo,
-  onDragStart,
-  onDragEnd,
-  onDragOver,
-  onDrop,
+  // onDragStart,
+  // onDragEnd,
+  // onDragOver,
+  // onDrop,
 }: TodoItem) => {
   const { updateTodo, deleteTodo } = useTodosQuery();
 
@@ -43,14 +42,14 @@ export const TodoItem = ({
       id={String(todo.id)}
       className="relative flex items-center px-5 py-[14px] group cursor-pointer"
       draggable
-      onDragStart={(event) => onDragStart(event, todo)}
-      onDragEnd={onDragEnd}
-      onDragOver={onDragOver}
-      onDrop={(e) => onDrop(e, todo)}
+      // onDragStart={(event) => onDragStart(event, todo)}
+      // onDragEnd={onDragEnd}
+      // onDragOver={onDragOver}
+      // onDrop={(e) => onDrop(e, todo)}
     >
       <button
         onClick={handleToggleComplete}
-        className="dark:bg-neutral-dark-very-dark-grayish-blue bg-neutral-light-very-light-grayish-blue hover:bg-check-background h-5 w-5 rounded-full p-[1px] flex items-center justify-center hover:bg-linear-to-br from-[#57ddff] to-[#c058f3]"
+        className={`${todo.completed ? "bg-linear-to-br from-[#57ddff] to-[#c058f3]" : "dark:bg-neutral-dark-very-dark-grayish-blue bg-neutral-light-very-light-grayish-blue hover:bg-linear-to-br from-[#57ddff] to-[#c058f3] cursor-pointer"} hover:bg-check-background h-5 w-5 rounded-full p-[1px] flex items-center justify-center`}
       >
         {todo.completed ? (
           <img src="/icon-check.svg" alt="check" />
@@ -58,7 +57,9 @@ export const TodoItem = ({
           <div className="bg-neutral-light-very-light-gray dark:bg-neutral-dark-very-dark-desaturated-blue h-full w-full rounded-full" />
         )}
       </button>
-      <p className="dark:text-neutral-dark-light-grayish-blue text-neutral-light-very-dark-grayish-blue focus:outline-none mx-3 flex-1 text-xs">
+      <p
+        className={`focus:outline-none mx-3 flex-1 text-xs ${todo.completed ? "line-through dark:text-neutral-dark-darker-grayish-blue text-neutral-light-dark-grayish-blue" : "dark:text-neutral-dark-light-grayish-blue text-neutral-light-very-dark-grayish-blue"}`}
+      >
         {todo.title}
       </p>
       <button

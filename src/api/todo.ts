@@ -7,7 +7,19 @@ const api = axios.create({
 
 export const todosApi = {
   getTodos: async (): Promise<Todo[]> => {
-    const { data } = await api.get("/todos");
+    let finalUrl = "/todos";
+
+    // const params = new URLSearchParams();
+
+    // if (filter !== "all") {
+    //   params.append("status", filter);
+    // }
+
+    // if (Array.from(params).length > 0) {
+    //   finalUrl += "?" + params.toString();
+    // }
+
+    const { data } = await api.get(finalUrl);
 
     return data;
   },

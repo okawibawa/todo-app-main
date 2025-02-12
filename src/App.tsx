@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 import { useTheme } from "./hooks/useTheme";
+import { useFilteredTodosQuery } from "./hooks/useFilteredTodosQuery";
 
 import { BackgroundImage } from "./components/BackgroundImage";
 import { TodoHeader } from "./components/TodoHeader";
@@ -10,53 +11,50 @@ import { TodoFilter } from "./components/TodoFilter";
 import { FilterType } from "./types/todo";
 
 function App() {
-  const { currentTheme, toggleTheme } = useTheme();
-
   const [filter, setFilter] = useState<FilterType>("all");
-  const [todos, setTodos] = useState([
-    { id: 1, title: "Jog around the park 3x", completed: false },
-    { id: 2, title: "Learn Golang", completed: false },
-    { id: 3, title: "Go to the gym", completed: false },
-  ]);
-  const [draggedItem, setDraggedItem] = useState<{
-    id: number;
-    title: string;
-    completed: boolean;
-  } | null>(null);
 
-  const handleDragStart = (
-    e: React.DragEvent<HTMLDivElement>,
-    todo: { id: number; title: string; completed: boolean },
-  ) => {
-    e.dataTransfer.setData("text/plain", e.currentTarget.id);
-    setDraggedItem(todo);
-  };
+  const { currentTheme, toggleTheme } = useTheme();
+  const { todos } = useFilteredTodosQuery(filter);
 
-  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-  };
+  // const [draggedItem, setDraggedItem] = useState<{
+  //   id: number;
+  //   title: string;
+  //   completed: boolean;
+  // } | null>(null);
 
-  const handleDragEnd = () => {
-    setDraggedItem(null);
-  };
+  // const handleDragStart = (
+  //   e: React.DragEvent<HTMLDivElement>,
+  //   todo: { id: number; title: string; completed: boolean },
+  // ) => {
+  //   e.dataTransfer.setData("text/plain", e.currentTarget.id);
+  //   setDraggedItem(todo);
+  // };
 
-  const handleDrop = (
-    e: React.DragEvent<HTMLDivElement>,
-    targetTodo: { id: number; title: string; completed: boolean },
-  ) => {
-    e.preventDefault();
+  // const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+  //   e.preventDefault();
+  // };
 
-    if (!draggedItem || draggedItem.id === targetTodo.id) return;
+  // const handleDragEnd = () => {
+  //   setDraggedItem(null);
+  // };
 
-    const newTodos = [...todos];
-    const draggedIndex = todos.findIndex((todo) => todo.id === draggedItem.id);
-    const targetIndex = todos.findIndex((todo) => todo.id === targetTodo.id);
-
-    newTodos.splice(draggedIndex, 1);
-    newTodos.splice(targetIndex, 0, draggedItem);
-
-    setTodos(newTodos);
-  };
+  // const handleDrop = (
+  //   e: React.DragEvent<HTMLDivElement>,
+  //   targetTodo: { id: number; title: string; completed: boolean },
+  // ) => {
+  //   e.preventDefault();
+  //
+  //   if (!draggedItem || draggedItem.id === targetTodo.id) return;
+  //
+  //   const newTodos = [...todos];
+  //   const draggedIndex = todos.findIndex((todo) => todo.id === draggedItem.id);
+  //   const targetIndex = todos.findIndex((todo) => todo.id === targetTodo.id);
+  //
+  //   newTodos.splice(draggedIndex, 1);
+  //   newTodos.splice(targetIndex, 0, draggedItem);
+  //
+  //   setTodos(newTodos);
+  // };
 
   return (
     <main className="px-6 py-12 md:px-0 md:py-[78px] dark:bg-neutral-dark-very-dark-blue bg-neutral-light-very-light-grayish-blue min-h-dvh relative">
@@ -71,14 +69,14 @@ function App() {
             <TodoItem
               key={todo.id}
               todo={todo}
-              onDragStart={handleDragStart}
-              onDragEnd={handleDragEnd}
-              onDragOver={handleDragOver}
-              onDrop={handleDrop}
+              // onDragStart={handleDragStart}
+              // onDragEnd={handleDragEnd}
+              // onDragOver={handleDragOver}
+              // onDrop={handleDrop}
             />
           ))}
           <div className="px-5 py-[14px] flex items-center justify-between">
-            <p className="dark:text-neutral-dark-darker-grayish-blue text-neutral-light-dark-grayish-blue text-xs">
+            <p className="dark:text-neutral-dark-dark-grayish-blue text-neutral-light-dark-grayish-blue text-xs">
               5 items left
             </p>
 
@@ -88,7 +86,7 @@ function App() {
               className="hidden md:flex items-center gap-3"
             />
 
-            <button className="dark:text-neutral-dark-darker-grayish-blue text-neutral-light-dark-grayish-blue text-xs">
+            <button className="dark:text-neutral-dark-dark-grayish-blue text-neutral-light-dark-grayish-blue text-xs">
               Clear Completed
             </button>
           </div>

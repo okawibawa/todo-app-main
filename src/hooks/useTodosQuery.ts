@@ -1,24 +1,9 @@
-import {
-  useQuery,
-  useMutation,
-  useQueryClient,
-  useQueryClient,
-} from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { todosApi } from "../api/todo";
 import { Todo, CreateTodoInput, UpdateTodoInput } from "../types/todo";
-import { Update } from "vite/types/hmrPayload.js";
 
 export const useTodosQuery = () => {
   const queryClient = useQueryClient();
-
-  const {
-    data: todos = [],
-    isLoading,
-    error,
-  } = useQuery({
-    queryKey: ["todos"],
-    queryFn: todosApi.getTodos,
-  });
 
   const createTodo = useMutation({
     mutationFn: (input: CreateTodoInput) => todosApi.createTodo(input),
@@ -50,9 +35,6 @@ export const useTodosQuery = () => {
   });
 
   return {
-    todos,
-    isLoading,
-    error,
     createTodo,
     updateTodo,
     deleteTodo,

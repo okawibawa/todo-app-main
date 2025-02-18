@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { todosApi } from "../api/todo";
 import { FilterType } from "../types/todo";
 import { useMemo } from "react";
@@ -8,7 +8,7 @@ export const useFilteredTodosQuery = (filter: FilterType) => {
     data: todos = [],
     isLoading,
     error,
-  } = useQuery({
+  } = useSuspenseQuery({
     queryKey: ["todos"],
     queryFn: todosApi.getTodos,
     staleTime: 1000 * 60 * 5,

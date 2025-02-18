@@ -1,20 +1,21 @@
-import { useState } from "react";
+import { Suspense, useState } from "react";
 
 import { useTheme } from "./hooks/useTheme";
 import { useFilteredTodosQuery } from "./hooks/useFilteredTodosQuery";
 
+import { FilterType } from "./types/todo";
+
 import { BackgroundImage } from "./components/BackgroundImage";
 import { TodoHeader } from "./components/TodoHeader";
+import { TodoCard } from "./components/TodoCard";
 import { TodoInput } from "./components/TodoInput";
-import { TodoItem } from "./components/TodoItem";
 import { TodoFilter } from "./components/TodoFilter";
-import { FilterType } from "./types/todo";
+import { TodoCardLoader } from "./components/TodoCardLoader";
 
 function App() {
   const [filter, setFilter] = useState<FilterType>("all");
 
   const { currentTheme, toggleTheme } = useTheme();
-  const { todos } = useFilteredTodosQuery(filter);
 
   // const [draggedItem, setDraggedItem] = useState<{
   //   id: number;
@@ -65,31 +66,9 @@ function App() {
         <TodoInput />
 
         <div className="dark:bg-neutral-dark-very-dark-desaturated-blue bg-neutral-light-very-light-gray rounded-md divide-solid dark:divide-neutral-dark-very-dark-grayish-blue divide-neutral-light-light-grayish-blue divide-y-[1px]">
-          {todos.map((todo) => (
-            <TodoItem
-              key={todo.id}
-              todo={todo}
-              // onDragStart={handleDragStart}
-              // onDragEnd={handleDragEnd}
-              // onDragOver={handleDragOver}
-              // onDrop={handleDrop}
-            />
-          ))}
-          <div className="px-5 py-[14px] flex items-center justify-between">
-            <p className="dark:text-neutral-dark-dark-grayish-blue text-neutral-light-dark-grayish-blue text-xs">
-              5 items left
-            </p>
-
-            <TodoFilter
-              filter={filter}
-              onFilter={setFilter}
-              className="hidden md:flex items-center gap-3"
-            />
-
-            <button className="dark:text-neutral-dark-dark-grayish-blue text-neutral-light-dark-grayish-blue text-xs">
-              Clear Completed
-            </button>
-          </div>
+          <Suspense fallback={<TodoCardLoader />}>
+            <TodoCard filter={filter} setFilter={setFilter} />
+          </Suspense>
         </div>
 
         <TodoFilter

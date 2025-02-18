@@ -5,12 +5,33 @@ export const useTheme = () => {
   const [currentTheme, setCurrentTheme] = useState<ThemeType>("dark");
 
   const toggleTheme = () => {
-    setCurrentTheme((prev) => (prev === "dark" ? "light" : "dark"));
+    setCurrentTheme((prev) => {
+      const newTheme = prev === "dark" ? "light" : "dark";
+
+      sessionStorage.setItem("theme", newTheme);
+
+      return newTheme;
+    });
   };
 
   useEffect(() => {
-    localStorage.setItem("theme", currentTheme);
-    document.body.classList.toggle("dark");
+    const storedTheme = sessionStorage.getItem("theme");
+
+    if (storedTheme && storedTheme !== currentTheme) {
+      setCurrentTheme(storedTheme as "dark" | "light");
+    }
+  }, []);
+
+  useEffect(() => {
+    if (currentTheme === "dark") {
+      document.body.classList.add("dark");
+    }
+
+    if (currentTheme === "light") {
+      document.body.classList.remove("dark");
+    }
+
+    sessionStorage.setItem("theme", currentTheme);
   }, [currentTheme]);
 
   return { currentTheme, toggleTheme };

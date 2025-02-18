@@ -64,7 +64,7 @@ export const TodoItem = ({
       </p>
       <button
         onClick={handleDelete}
-        className="ml-auto block sm:hidden sm:group-hover:block"
+        className="ml-auto block sm:hidden sm:group-hover:block cursor-pointer"
       >
         <img className="w-3 h-3" src="/icon-cross.svg" alt="cross" />
       </button>

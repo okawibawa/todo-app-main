@@ -8,14 +8,14 @@ export const useTheme = () => {
     setCurrentTheme((prev) => {
       const newTheme = prev === "dark" ? "light" : "dark";
 
-      sessionStorage.setItem("theme", newTheme);
+      localStorage.setItem("theme", newTheme);
 
       return newTheme;
     });
   };
 
   useEffect(() => {
-    const storedTheme = sessionStorage.getItem("theme");
+    const storedTheme = localStorage.getItem("theme");
 
     if (storedTheme && storedTheme !== currentTheme) {
       setCurrentTheme(storedTheme as "dark" | "light");
@@ -31,7 +31,7 @@ export const useTheme = () => {
       document.body.classList.remove("dark");
     }
 
-    sessionStorage.setItem("theme", currentTheme);
+    localStorage.setItem("theme", currentTheme);
   }, [currentTheme]);
 
   return { currentTheme, toggleTheme };

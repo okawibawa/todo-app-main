@@ -1,7 +1,6 @@
 import { Suspense, useState } from "react";
 
 import { useTheme } from "./hooks/useTheme";
-import { useFilteredTodosQuery } from "./hooks/useFilteredTodosQuery";
 
 import { FilterType } from "./types/todo";
 

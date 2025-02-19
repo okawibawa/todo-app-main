@@ -27,6 +27,13 @@ export const useTodosQuery = () => {
     },
   });
 
+  const deleteCompletedTodos = useMutation({
+    mutationFn: () => todosApi.deleteCompletedTodos(),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["todos"] });
+    },
+  });
+
   const reorderTodos = useMutation({
     mutationFn: (todos: Todo[]) => todosApi.reorderTodos(todos),
     onSuccess: () => {
@@ -38,6 +45,7 @@ export const useTodosQuery = () => {
     createTodo,
     updateTodo,
     deleteTodo,
+    deleteCompletedTodos,
     reorderTodos,
   };
 };

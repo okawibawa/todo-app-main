@@ -9,6 +9,7 @@ export const todosApi = {
   getTodos: async (): Promise<Todo[]> => {
     let finalUrl = "/todos";
 
+    // Server-side filtering
     // const params = new URLSearchParams();
 
     // if (filter !== "all") {
@@ -38,6 +39,12 @@ export const todosApi = {
 
   deleteTodo: async (id: number) => {
     const { data } = await api.delete(`/todos/${id}`);
+
+    return data;
+  },
+
+  deleteCompletedTodos: async () => {
+    const { data } = await api.delete("/todos/completed");
 
     return data;
   },

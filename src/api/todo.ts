@@ -7,7 +7,7 @@ const api = axios.create({
 
 export const todosApi = {
   getTodos: async (): Promise<Todo[]> => {
-    let finalUrl = "/todos";
+    const finalUrl = "/todos";
 
     // Server-side filtering
     // const params = new URLSearchParams();
@@ -31,8 +31,8 @@ export const todosApi = {
     return data;
   },
 
-  updateTodo: async (id: number, input: UpdateTodoInput) => {
-    const { data } = await api.patch(`/todos/${id}`, input);
+  updateTodo: async (id: number, payload: UpdateTodoInput) => {
+    const { data } = await api.patch(`/todos/${id}`, payload);
 
     return data;
   },

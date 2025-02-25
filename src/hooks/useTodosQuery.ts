@@ -13,8 +13,8 @@ export const useTodosQuery = () => {
   });
 
   const updateTodo = useMutation({
-    mutationFn: ({ id, input }: { id: number; input: UpdateTodoInput }) =>
-      todosApi.updateTodo(id, input),
+    mutationFn: ({ id, payload }: { id: number; payload: UpdateTodoInput }) =>
+      todosApi.updateTodo(id, payload),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["todos"] });
     },

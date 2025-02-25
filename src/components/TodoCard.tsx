@@ -20,20 +20,30 @@ export const TodoCard = ({
     try {
       await deleteCompletedTodos.mutateAsync();
     } catch (error) {
-      throw error;
+      console.error("Failed to delete completed todo(s): ", error);
     }
   };
 
   return (
     <>
-      {todos.map((todo) => (
+      {todos.filter((todo) => todo.completed !== true).map((todo) => (
         <TodoItem
           key={todo.id}
           todo={todo}
-          // onDragStart={handleDragStart}
-          // onDragEnd={handleDragEnd}
-          // onDragOver={handleDragOver}
-          // onDrop={handleDrop}
+        // onDragStart={handleDragStart}
+        // onDragEnd={handleDragEnd}
+        // onDragOver={handleDragOver}
+        // onDrop={handleDrop}
+        />
+      ))}
+      {todos.filter((todo) => todo.completed === true).map((todo) => (
+        <TodoItem
+          key={todo.id}
+          todo={todo}
+        // onDragStart={handleDragStart}
+        // onDragEnd={handleDragEnd}
+        // onDragOver={handleDragOver}
+        // onDrop={handleDrop}
         />
       ))}
       <div className="px-5 py-[14px] flex items-center justify-between">

@@ -21,7 +21,7 @@ export const TodoItem = ({
     try {
       await updateTodo.mutateAsync({
         id: todo.id,
-        input: { completed: !todo.completed },
+        payload: { completed: !todo.completed },
       });
     } catch (error) {
       console.error("Faled to update todo: ", error);
@@ -42,10 +42,10 @@ export const TodoItem = ({
       id={String(todo.id)}
       className="relative flex items-center px-5 py-[14px] group cursor-pointer"
       draggable
-      // onDragStart={(event) => onDragStart(event, todo)}
-      // onDragEnd={onDragEnd}
-      // onDragOver={onDragOver}
-      // onDrop={(e) => onDrop(e, todo)}
+    // onDragStart={(event) => onDragStart(event, todo)}
+    // onDragEnd={onDragEnd}
+    // onDragOver={onDragOver}
+    // onDrop={(e) => onDrop(e, todo)}
     >
       <button
         onClick={handleToggleComplete}

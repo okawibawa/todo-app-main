@@ -1,14 +1,20 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { todosApi } from "../api/todo";
 import { Todo, CreateTodoInput, UpdateTodoInput } from "../types/todo";
+import { useSocketActions } from "./useSocketActions";
 
 export const useTodosQuery = () => {
   const queryClient = useQueryClient();
+  const { isConnected, sendMessage } = useSocketActions()
 
   const createTodo = useMutation({
     mutationFn: (input: CreateTodoInput) => todosApi.createTodo(input),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["todos"] });
+
+      if (isConnected) {
+        sendMessage('ADD_TODO', {})
+      }
     },
   });
 

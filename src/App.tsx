@@ -1,7 +1,5 @@
 import { Suspense, useEffect, useState } from "react";
 
-import { useQueryClient } from "@tanstack/react-query";
-
 import { useTheme } from "./hooks/useTheme";
 
 import { FilterType } from "./types/todo";
@@ -13,10 +11,13 @@ import { TodoInput } from "./components/TodoInput";
 import { TodoFilter } from "./components/TodoFilter";
 import { TodoCardLoader } from "./components/TodoCardLoader";
 
+import { useSocketManager } from "./hooks/useSocketManager";
+
 function App() {
+  useSocketManager()
+
   const [filter, setFilter] = useState<FilterType>("all");
 
-  const queryClient = useQueryClient();
   const { currentTheme, toggleTheme } = useTheme();
 
   // const [draggedItem, setDraggedItem] = useState<{
@@ -58,22 +59,6 @@ function App() {
   //
   //   setTodos(newTodos);
   // };
-
-  useEffect(() => {
-    const ws = new WebSocket('ws://localhost:3001')
-
-    ws.onmessage = (event) => {
-      const parsedEventData = JSON.parse(event.data)
-
-      switch (parsedEventData.type) {
-        case 'NEW_TODO':
-        case 'UPDATE_TODO':
-        case 'DELETE_COMPLETED_TODOS':
-        case 'DELETE_TODO':
-          queryClient.invalidateQueries({ queryKey: ['todos'] })
-      }
-    }
-  }, [])
 
   return (
     <main className="px-6 py-12 md:px-0 md:py-[78px] dark:bg-neutral-dark-very-dark-blue bg-neutral-light-very-light-grayish-blue min-h-dvh relative">
